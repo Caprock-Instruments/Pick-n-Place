@@ -2855,4 +2855,8 @@ void MainWindow::on_pushButton_Calibrate_Feeder_clicked()
  * so that Parts can be sorted and placed togeather ...
  *
  * fix GitHub so we also have remote access
+ *
+ * ended up using cmd line to upload project to GitHub;
+ * then created a new folder and cloned the Remote project into this folder and then opened it up in QTCreator
+ *
  */
