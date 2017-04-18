@@ -2858,5 +2858,9 @@ void MainWindow::on_pushButton_Calibrate_Feeder_clicked()
  *
  * ended up using cmd line to upload project to GitHub;
  * then created a new folder and cloned the Remote project into this folder and then opened it up in QTCreator
+ *that gave us a fresh start here in QTCreator for using GitHub
+ * so when we do a local commit; it also prompts us to set UserName, and Email; set it to Match GitHub Repository
+ *
+ *
  *
  */
