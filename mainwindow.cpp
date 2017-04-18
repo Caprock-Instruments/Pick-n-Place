@@ -2854,5 +2854,5 @@ void MainWindow::on_pushButton_Calibrate_Feeder_clicked()
  * 1) figure out how to combine boards into a single master-part list (that keeps board id for placing)
  * so that Parts can be sorted and placed togeather ...
  *
- *
+ * fix GitHub so we also have remote access
  */
