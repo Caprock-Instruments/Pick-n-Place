@@ -2861,6 +2861,7 @@ void MainWindow::on_pushButton_Calibrate_Feeder_clicked()
  *that gave us a fresh start here in QTCreator for using GitHub
  * so when we do a local commit; it also prompts us to set UserName, and Email; set it to Match GitHub Repository
  *
+ *this appears this easiest path; as QTCreator will prompt for username and password, but doesn't for email
  *
  *
  */
