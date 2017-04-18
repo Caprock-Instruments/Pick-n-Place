@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1884</width>
+    <height>1188</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"> color: rgb(0, 120, 255);     background-color: rgb(240,220,150);</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButton_Run_Stop">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>170</y>
+      <width>111</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QStyle::SP_ArrowUp</string>
+    </property>
+    <property name="text">
+     <string>Start Machine</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>180</y>
+      <width>21</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_X">
+    <property name="geometry">
+     <rect>
+      <x>183</x>
+      <y>180</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> color: rgb(255, 89, 242);  background-color: rgb(0, 85, 0);</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_Y">
+    <property name="geometry">
+     <rect>
+      <x>183</x>
+      <y>210</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> color: rgb(255, 89, 242);  background-color: rgb(0, 85, 0);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>210</y>
+      <width>21</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Y</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_Z">
+    <property name="geometry">
+     <rect>
+      <x>313</x>
+      <y>180</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> color: rgb(255, 89, 242);  background-color: rgb(0, 85, 0);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>180</y>
+      <width>21</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Z</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_Angle">
+    <property name="geometry">
+     <rect>
+      <x>313</x>
+      <y>210</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> color: rgb(255, 89, 242);  background-color: rgb(0, 85, 0);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>210</y>
+      <width>51</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Angle</string>
+    </property>
+   </widget>
+   <widget class="my_qlabel" name="label_imageShow">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>280</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Flying Vision</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_upVision">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>280</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Up-Vision</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Next_Fiducial">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Next Fiducial</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Next_Feeder">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Move to Next Feeder</string>
+    </property>
+    <property name="text">
+     <string>Next Feeder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Next_GCode_Line">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Next GCode Line</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Reset_GCode">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>40</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QStyle::SP_ArrowUp</string>
+    </property>
+    <property name="text">
+     <string>Reset GCode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Run_GCode">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QStyle::SP_ArrowUp</string>
+    </property>
+    <property name="text">
+     <string>Run GCode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Find_Nearest_Fiducial">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>200</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Find Nearest Fiducial</string>
+    </property>
+    <property name="text">
+     <string>Nearest Fiducial</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Calibrate_Board">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>240</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Calibrate Board</string>
+    </property>
+    <property name="text">
+     <string>Calibrate Board</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Next_Board">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Move to Next Board</string>
+    </property>
+    <property name="text">
+     <string>Next Board</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_SkipFeeder">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Skip This Feeder</string>
+    </property>
+    <property name="text">
+     <string>Skip Feeder</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>260</y>
+      <width>511</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Jog Move</string>
+    </property>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>250</y>
+       <width>91</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"> color: rgb(255, 255, 255);  background-color: rgb(0, 85, 0);</string>
+     </property>
+     <property name="maximum">
+      <double>499.990000000000009</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>60</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Move Amount</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Left">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>140</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Left</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>300</y>
+       <width>67</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nozzle 3</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>300</y>
+       <width>67</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nozzle 1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CCW_4">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>650</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CCW 4</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CW_4">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>340</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CW 4</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>300</y>
+       <width>67</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nozzle 2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Up_1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>444</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Up 1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Down_2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>536</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Down 2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Down_4">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>536</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Down 4</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Up_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>440</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Up 3</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CCW_1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>650</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CCW 1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CW_2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>340</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CW 2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Down_1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>540</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Down 1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CCW_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>650</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CCW 3</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Up_4">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>440</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Up 4</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>50</y>
+       <width>67</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Carriage</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Right">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>140</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Right</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CCW_2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>650</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CCW 2</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>300</y>
+       <width>67</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nozzle 4</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CW_1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>340</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CW 1</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="verticalSlider">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>89</y>
+       <width>21</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_CW_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>340</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>CW 3</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Forward">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>90</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Forward</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Down_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>536</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Down 3</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Up_2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>440</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Up 2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Reverse">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>190</y>
+       <width>89</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QStyle::SP_ArrowUp</string>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Calibrate_Feeder">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>200</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Position Flying-Vision at Cal. Pt. for Feeder, then click this</string>
+    </property>
+    <property name="text">
+     <string>Calibrate Feeder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Find_Part">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>200</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Find Part</string>
+    </property>
+    <property name="text">
+     <string>Find Part</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Find_Part_2">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>240</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Find Part</string>
+    </property>
+    <property name="text">
+     <string>Rotate Part</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Move_to_Next_Part">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>240</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Move_to_Next_Part (vision centered)</string>
+    </property>
+    <property name="text">
+     <string>Next_Part</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_comm">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>30</y>
+      <width>751</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Comm 1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_comm_2">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>50</y>
+      <width>781</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Comm 2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_info">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>10</y>
+      <width>801</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Info</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_runVideo">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>90</y>
+      <width>151</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run Video</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1884</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionLoad_Feeders"/>
+    <addaction name="actionLoad_Nozzles"/>
+    <addaction name="actionCompile_Job"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuConfig">
+    <property name="title">
+     <string>Config</string>
+    </property>
+    <addaction name="actionCnc"/>
+    <addaction name="actionConfig_Nozzles"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_Board"/>
+    <addaction name="actionAdd_Feeder"/>
+    <addaction name="actionAdd_Part"/>
+   </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionJog"/>
+    <addaction name="actionTeach"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionTutorial"/>
+    <addaction name="actionManual"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuConfig"/>
+   <addaction name="menuTest"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open Job</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close Job</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionCnc">
+   <property name="text">
+    <string>Config_Cnc</string>
+   </property>
+  </action>
+  <action name="actionJog">
+   <property name="text">
+    <string>Jog</string>
+   </property>
+  </action>
+  <action name="actionTeach">
+   <property name="text">
+    <string>Teach</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionTutorial">
+   <property name="text">
+    <string>Tutorial</string>
+   </property>
+  </action>
+  <action name="actionManual">
+   <property name="text">
+    <string>Manual</string>
+   </property>
+  </action>
+  <action name="actionAdd_Board">
+   <property name="text">
+    <string>Config Board</string>
+   </property>
+  </action>
+  <action name="actionAdd_Feeder">
+   <property name="text">
+    <string>Config Feeders</string>
+   </property>
+  </action>
+  <action name="actionAdd_Part">
+   <property name="text">
+    <string>Config Parts</string>
+   </property>
+  </action>
+  <action name="actionConfig_Nozzles">
+   <property name="text">
+    <string>Config Nozzles</string>
+   </property>
+  </action>
+  <action name="actionLoad_Feeders">
+   <property name="text">
+    <string>Load Feeders</string>
+   </property>
+  </action>
+  <action name="actionCompile_Job">
+   <property name="text">
+    <string>Compile Job</string>
+   </property>
+  </action>
+  <action name="actionLoad_Nozzles">
+   <property name="text">
+    <string>Load Nozzles</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>my_qlabel</class>
+   <extends>QLabel</extends>
+   <header location="global">my_qlabel.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

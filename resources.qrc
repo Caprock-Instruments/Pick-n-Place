@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Up_Arrow.png</file>
+        <file>Stop.png</file>
+        <file>Run.png</file>
+        <file>Rotate_CCW.png</file>
+        <file>Rotate.png</file>
+        <file>Right_Arrow.png</file>
+        <file>Left_Arrow.png</file>
+        <file>Down_Arrow.png</file>
+        <file>Forward_Arrow.png</file>
+        <file>Backward_Arrow.png</file>
+        <file>Rotate_CW.png</file>
+    </qresource>
+</RCC>
