@@ -2515,6 +2515,14 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
     QStringList nozzle_fill_status;  //holds our current nozzle part_ids assignment
     init_nozzle_fill_status(nozzle_fill_status);
 
+    float board_first_fudicial_X = cboard.board_location.x;
+    float board_first_fudicial_Y = cboard.board_location.y;
+    float board_rotation = cboard.board_rotation;
+    Point2f board_first_fudicial_pt;
+    board_first_fudicial_pt.x = board_first_fudicial_X;
+    board_first_fudicial_pt.y = board_first_fudicial_Y;
+
+
     for(int i=0;i<N;i++)
     {
         QStringList board_line_list = all_board_info_list[i];
@@ -2559,13 +2567,30 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
             part.relative_part_place_rotation = relative_rotation;
 
 
-            //Need to ADD Global Centroid location (takes into account Board location
-
-
+            //GET FIDUCIALS AND THEN COMPUTE CNC MACHINE POSITIONS FOR EACH PART; ASSUMES AT LEAST 2 FIDUC's ARE 1ST IN FILE
             if(sPartType == "FIDUC")
             {
                 board.relative_fiducial_locations.push_back(relative_centroid);
             }
+            else  //assumes FIDUC are at top of file!
+            {
+                //chk to ensure FIDUC's were loaded already
+                int N = static_cast<int>(board.relative_fiducial_locations.size());
+                if(N < 2)
+                {
+                    //flag error; FIDUC's must come first in FILE!
+                    QMessageBox msgBox;
+                    msgBox.critical(0, "Error", "Not enough Fiducials in board file; please check files");
+                }
+                bool ok_calc = compute_absolute_part_centroid(board_rotation, board_first_fudicial_pt);
+                if(!ok_calc)
+                {
+                    //flag error; bad fiducials?
+                    QMessageBox msgBox;
+                    msgBox.critical(0, "Error", "Couldn't Compute CNC Position for part [bad fiducials?]; please check files");
+                }
+            }
+
 
             //now we need to find a feeder for this part and assign a nozzle
             int feeder_Id_to_use;
