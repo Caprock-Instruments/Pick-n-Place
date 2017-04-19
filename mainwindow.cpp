@@ -2515,9 +2515,9 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
     QStringList nozzle_fill_status;  //holds our current nozzle part_ids assignment
     init_nozzle_fill_status(nozzle_fill_status);
 
-    float board_first_fudicial_X = cboard.board_location.x;
-    float board_first_fudicial_Y = cboard.board_location.y;
-    float board_rotation = cboard.board_rotation;
+    float board_first_fudicial_X = board.board_location.x;
+    float board_first_fudicial_Y = board.board_location.y;
+    float board_rotation = board.board_rotation;
     Point2f board_first_fudicial_pt;
     board_first_fudicial_pt.x = board_first_fudicial_X;
     board_first_fudicial_pt.y = board_first_fudicial_Y;
@@ -2582,7 +2582,7 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
                     QMessageBox msgBox;
                     msgBox.critical(0, "Error", "Not enough Fiducials in board file; please check files");
                 }
-                bool ok_calc = compute_absolute_part_centroid(board_rotation, board_first_fudicial_pt);
+                bool ok_calc = part.compute_absolute_part_centroid(board_rotation, board_first_fudicial_pt);
                 if(!ok_calc)
                 {
                     //flag error; bad fiducials?
