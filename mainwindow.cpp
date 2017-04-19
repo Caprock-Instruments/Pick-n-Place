@@ -2541,24 +2541,30 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
             QString sPackage = board_line_list[5];
             QString sPartType = board_line_list[6];
 
-            float centroid_X = sCentroid_X.toFloat();
-            float centroid_Y = sCentroid_X.toFloat();
-            float rotation = sRotation.toFloat();
+            float relative_centroid_X = sCentroid_X.toFloat();
+            float relative_centroid_Y = sCentroid_X.toFloat();
+            float relative_rotation = sRotation.toFloat();
 
-            Point2f centroid;
-            centroid.x = centroid_X;
-            centroid.y = centroid_Y;
+            Point2f relative_centroid;
+            relative_centroid.x = relative_centroid_X;
+            relative_centroid.y = relative_centroid_Y;
+
+            //must compute absolute centroid (should we do it in cBoard or cPart class ?)
 
             part.part_Id = sPart_ID;
             part.sPackage = sPackage;
             part.part_type = sPartType;
             part.part_value = sPartValue;
-            part.part_centroid = centroid;
-            part.part_place_rotation = rotation;
+            part.relative_part_centroid = relative_centroid;
+            part.relative_part_place_rotation = relative_rotation;
+
+
+            //Need to ADD Global Centroid location (takes into account Board location
+
 
             if(sPartType == "FIDUC")
             {
-                board.relative_fiducial_locations.push_back(centroid);
+                board.relative_fiducial_locations.push_back(relative_centroid);
             }
 
             //now we need to find a feeder for this part and assign a nozzle
@@ -2580,6 +2586,9 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
             //save last feeder used
             last_feeder_used = feeder_Id_to_use;
 
+
+
+            //DON'T DO THIS HERE; NEED TO ASSIGN NOZZLES TO MASTER-LIST NOT JUST A SINGLE BOARD!
 
             //Now need to assign this part to a nozzle
             int nozzle_Id_to_use;
@@ -2697,6 +2706,10 @@ void MainWindow::load_boards(QString boards_list_fileName)
 
 
     }
+
+    //NOW ALL BOARDS HAVE BEEN ASSIGNED FEEDERS; TIME TO MAKE A MASTER LIST OF ALL BOARDS SO WE CAN ASSIGN NOZZLES ACROSS MULTIPLE BD PLACEMENTS
+    //Assign Nozzles to Master_Part list (cBoards)
+
 
 }
 
@@ -2858,7 +2871,7 @@ void MainWindow::on_pushButton_Calibrate_Feeder_clicked()
  *
  * ended up using cmd line to upload project to GitHub;
  * then created a new folder and cloned the Remote project into this folder and then opened it up in QTCreator
- *that gave us a fresh start here in QTCreator for using GitHub
+ * that gave us a fresh start here in QTCreator for using GitHub
  * so when we do a local commit; it also prompts us to set UserName, and Email; set it to Match GitHub Repository
  *
  *this appears this easiest path; as QTCreator will prompt for username and password, but doesn't for email

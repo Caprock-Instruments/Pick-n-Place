@@ -18,6 +18,7 @@
 #include <QStringList>
 
 #include "cpart.h"
+#include "cutils_math.h"
 
 
 using namespace cv;
@@ -33,6 +34,10 @@ public:
 
     void sort_parts_by_nozzle_size();
 
+    bool compute_absolute_part_centroid();
+
+    bool compute_corrections();
+
 signals:
 
 public slots:
@@ -42,10 +47,14 @@ public:
     float board_rotation;
     Point2f board_location;
 
+    float dx_correction = 0.0;
+    float dy_correction = 0.0;
+
+
     vector<Point2f> relative_fiducial_locations;
 
     //abs fudicial location to use for computing placements
-    vector<Point2f> abs_fudicial_locations;  //location after calibration (vision-capture)
+    vector<Point2f> absolute_fudicial_locations;  //location after calibration (vision-capture)
 
     vector<cPart> part_list;   //may need this for upVision ...
 
@@ -54,6 +63,8 @@ public:
 
 
 private:
+    bool compute_XY_corrections();
+    void compute_absolute_board_rotation();  //computes absolute part centroid for all our parts
 
 
 };

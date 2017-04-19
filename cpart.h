@@ -17,6 +17,7 @@
 
 #include "cpackage.h"
 #include "cnozzle.h"
+#include "cutils_math.h"
 
 using namespace cv;
 using namespace std;
@@ -39,6 +40,9 @@ public:
     //comparison function for 'bool operator<()'
     bool compare_for_sort(QString lhs_sNozzleType, QString rhs_sNozzleType) const;  //note: must be a const function as well
 
+    //computes absolute part centroid for this part
+    bool compute_absolute_part_centroid(double board_rotation_degrees, Point2f first_absolute_fiducial_location);
+
 signals:
 
 public slots:
@@ -59,8 +63,11 @@ public:
     int nozzle_id; //a nozzle_id for each part, so we know which nozzle and can get specs on what it'll place
     int nozzle_def_list_to_use; //which set of nozzle lists to use
 
-    Point2f part_centroid;  //place on board to place it
-    float part_place_rotation;  //orientation on board to place it
+    Point2f absolute_part_centroid;  //place on board to place it
+    float absolute_part_place_rotation;  //orientation on board to place it
+
+    Point2f relative_part_centroid;  //place on board to place it
+    float relative_part_place_rotation;  //orientation on board to place it
 
     bool start_fresh_nozzle_fill=false; //when we get to this part; this var tells us to go place what's in nozzle first before loading this 1
 
