@@ -2356,157 +2356,6 @@ bool MainWindow::find_feeder(cPart part, int last_feeder_used, int &feeder_Id_to
     return found;
 }
 
-bool MainWindow::find_compatible_nozzles(cPart part, vector<int> &compatibleNozzles_list, cNozzles nozzle_list)
-{
-    bool found = false;
-
-    int cnt = static_cast<int>(nozzle_list.nozzle_list.size());
-
-    QString sPart_package = part.sPackage;
-
-    for(int i=0;i<cnt;i++)
-    {
-        cNozzle nozzle = nozzle_list.nozzle_list[i];
-
-        QStringList comp_nozzle_packages = nozzle.sPackages;
-
-        int N = comp_nozzle_packages.count();
-
-        for(int j=0;j<N;j++)
-        {
-            QString sPackage = comp_nozzle_packages[j];
-
-            if(sPart_package == sPackage)
-            {
-                //found compatible nozzle
-                found = true;
-                compatibleNozzles_list.push_back(i);  //save nozzle_location in nozzle_list
-            }
-        }
-
-    }
-
-    return found;
-}
-
-void MainWindow::init_nozzle_fill_status(QStringList &nozzle_fill_status)
-{
-    nozzle_fill_status.clear();
-
-    for(int i=0;i<MAX_NUM_NOZZLES;i++)
-    {
-        nozzle_fill_status << "EMPTY";
-    }
-}
-
-//start_fresh_fill means go do a place op and then this part will start over filling up nozzles
-bool MainWindow::assign_nozzle(cPart part, QStringList &nozzle_fill_status, int &nozzle_Id_to_use, int &nozzle_def_list_to_use, bool &start_fresh_fill)
-{
-    bool found = false;
-
-    //find list of compatible nozzles
-
-    QString sPackage = part.sPackage;
-
-    //need active nozzle list (what do we do when we switch 1/2 way through to new set of nozzles?
-    //how to know if we should just start a fresh fill or switch to a new rack?
-
-    int cnt = static_cast<int>(nozzles_defs_list.size());
-
-
-
-    for(int i=0;i<cnt;i++)
-    {
-        cNozzles nozzle_list = nozzles_defs_list[i];
-
-        vector<int> compatibleNozzles_list;
-
-        bool found = find_compatible_nozzles(part, compatibleNozzles_list, nozzle_list);
-
-        if(found)  //found so it we don't find an EMPTY NOZZLE; DO REFILL
-        {
-            int N = static_cast<int>(compatibleNozzles_list.size());
-
-            for(int j=0;j<N;j++)
-            {
-                int nozzle_id = compatibleNozzles_list[j];
-
-                if(nozzle_id < MAX_NUM_NOZZLES)
-                {
-                    //need to check if nozzle is in use
-                    if(nozzle_fill_status[nozzle_id]=="EMPTY")
-                    {
-                        //FOUND OUR NOZZLE
-                        found = true;
-                        nozzle_Id_to_use = nozzle_id;
-                        nozzle_def_list_to_use = i;
-
-                        nozzle_fill_status[nozzle_id] = sPackage;
-                        return found;
-                    }
-                }
-            }
-
-            //DIDN'T FIND IT SO START FRESH FILL
-            start_fresh_fill = true;
-
-            //reset nozzle_fill_status to back all empty
-            init_nozzle_fill_status(nozzle_fill_status);
-
-            for(int j=0;j<N;j++)
-            {
-                int nozzle_id = compatibleNozzles_list[j];
-
-                if(nozzle_id < MAX_NUM_NOZZLES)
-                {
-                    //need to check if nozzle is in use
-                    if(nozzle_fill_status[nozzle_id]=="EMPTY")
-                    {
-                        //FOUND OUR NOZZLE
-                        nozzle_Id_to_use = nozzle_id;
-                        nozzle_def_list_to_use = i;
-
-                        nozzle_fill_status[nozzle_id] = sPackage;
-                        return found;
-                    }
-                }
-            }
-
-            //if were here; we have an error
-            //flag error
-            QMessageBox msgBox;
-            msgBox.critical(0, "Error", "coding error; shouldn't be here; inside assign nozzle");
-
-            return found;
-
-
-        }
-
-    }
-
-    if(!found)
-    {
-        //flag error
-        QMessageBox msgBox;
-        msgBox.critical(0, "Error", "Couldn't Assign Nozzle...");
-
-        return found;
-    }
-
-    part.start_fresh_nozzle_fill = start_fresh_fill;
-    part.nozzle_id = nozzle_Id_to_use;
-    part.nozzle_def_list_to_use = nozzle_def_list_to_use;
-
-    //get nozzleType (used for sorting cParts in a board by nozzle-size)
-    cNozzles cNozzle_list = nozzles_defs_list[nozzle_def_list_to_use];
-    cNozzle nozzle = cNozzle_list.nozzle_list[nozzle_Id_to_use];
-    QString sNozzleType = nozzle.sNozzleType;
-    part.sNozzleType = sNozzleType;
-
-
-    return found;
-}
-
 
 void MainWindow::load_board(QString board_fileName, cBoard &board)
 {
@@ -2532,8 +2381,6 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
     int nozzle_id = 1;  //start out at 1
     int last_feeder_used = -1;  //used to scatter out picks across feeders for same valued parts (if possible)
 
-    QStringList nozzle_fill_status;  //holds our current nozzle part_ids assignment
-    init_nozzle_fill_status(nozzle_fill_status);
 
     float board_first_fudicial_X = board.board_location.x;
     float board_first_fudicial_Y = board.board_location.y;
@@ -2634,18 +2481,6 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
             last_feeder_used = feeder_Id_to_use;
 
 
-
-            //DON'T DO THIS HERE; NEED TO ASSIGN NOZZLES TO MASTER-LIST NOT JUST A SINGLE BOARD!
-
-            //Now need to assign this part to a nozzle
-            int nozzle_Id_to_use;
-            bool start_fresh_fill;
-            int  nozzle_def_list_to_use;
-
-            bool bAssigned_ok = assign_nozzle(part, nozzle_fill_status, nozzle_Id_to_use, nozzle_def_list_to_use, start_fresh_fill);
-
-
-
             //add part to board's part_list
             board.part_list.push_back(part);
         }
@@ -2741,7 +2576,7 @@ void MainWindow::load_boards(QString boards_list_fileName)
     //need to sort all parts in master-list by nozzle size
     all_boards_list.sort_parts_by_nozzle_size();
     //assign feeders to master list of parts
-
+    all_boards_list.assign_all_parts_to_nozzles(nozzles_defs_list, MAX_NUM_NOZZLES);
 
 }
 

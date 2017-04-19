@@ -190,11 +190,8 @@ private:
     void load_board(QString board_fileName, cBoard &board);
 
     bool find_feeder(cPart part, int last_feeder_used, int &feeder_Id_to_use);
-    bool assign_nozzle(cPart part, QStringList &nozzle_fill_status, int &nozzle_Id_to_use, int &nozzle_list_to_use, bool &start_fresh_fill);
-    void init_nozzle_fill_status(QStringList &nozzle_fill_status);
 
     bool find_compatible_feeders(cPart part, vector<int> &compatibleFeeders_list);
-    bool find_compatible_nozzles(cPart part, vector<int> &compatibleNozzles_list, cNozzles nozzle_list);
 
 
     void compile_job();  //combines feeder info with board info and nozzle into to build working job
