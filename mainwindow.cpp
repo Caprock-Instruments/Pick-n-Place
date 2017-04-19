@@ -2484,6 +2484,26 @@ bool MainWindow::assign_nozzle(cPart part, QStringList &nozzle_fill_status, int 
 
     }
 
+    if(!found)
+    {
+        //flag error
+        QMessageBox msgBox;
+        msgBox.critical(0, "Error", "Couldn't Assign Nozzle...");
+
+        return found;
+    }
+
+    part.start_fresh_nozzle_fill = start_fresh_fill;
+    part.nozzle_id = nozzle_Id_to_use;
+    part.nozzle_def_list_to_use = nozzle_def_list_to_use;
+
+    //get nozzleType (used for sorting cParts in a board by nozzle-size)
+    cNozzles cNozzle_list = nozzles_defs_list[nozzle_def_list_to_use];
+    cNozzle nozzle = cNozzle_list.nozzle_list[nozzle_Id_to_use];
+    QString sNozzleType = nozzle.sNozzleType;
+    part.sNozzleType = sNozzleType;
+
+
     return found;
 }
 
@@ -2582,6 +2602,8 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
                     QMessageBox msgBox;
                     msgBox.critical(0, "Error", "Not enough Fiducials in board file; please check files");
                 }
+
+                //COMPUTE CNC MACHINE POSITIONS FOR EACH PART; ASSUMES AT LEAST 2 FIDUC's ARE 1ST IN FILE
                 bool ok_calc = part.compute_absolute_part_centroid(board_rotation, board_first_fudicial_pt);
                 if(!ok_calc)
                 {
@@ -2622,25 +2644,6 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
 
             bool bAssigned_ok = assign_nozzle(part, nozzle_fill_status, nozzle_Id_to_use, nozzle_def_list_to_use, start_fresh_fill);
 
-            if(!bAssigned_ok)
-            {
-                //flag error
-                QMessageBox msgBox;
-                msgBox.critical(0, "Error", "Couldn't Assign Nozzle...");
-
-                return;
-
-            }
-
-            part.start_fresh_nozzle_fill = start_fresh_fill;
-            part.nozzle_id = nozzle_Id_to_use;
-            part.nozzle_def_list_to_use = nozzle_def_list_to_use;
-
-            //get nozzleType (used for sorting cParts in a board by nozzle-size)
-            cNozzles cNozzle_list = nozzles_defs_list[nozzle_def_list_to_use];
-            cNozzle nozzle = cNozzle_list.nozzle_list[nozzle_Id_to_use];
-            QString sNozzleType = nozzle.sNozzleType;
-            part.sNozzleType = sNozzleType;
 
 
             //add part to board's part_list
@@ -2719,6 +2722,8 @@ void MainWindow::load_boards(QString boards_list_fileName)
             load_board(sBoard_fileName, cboard);
 
             board_list.push_back(cboard);
+            all_boards_list.master_board_list.push_back(cboard);  //add board to master list
+            all_boards_list.append_part_to_master_list(cboard);  //add board parts to master list
         }
         catch(const char* e)
         {
@@ -2732,8 +2737,10 @@ void MainWindow::load_boards(QString boards_list_fileName)
 
     }
 
-    //NOW ALL BOARDS HAVE BEEN ASSIGNED FEEDERS; TIME TO MAKE A MASTER LIST OF ALL BOARDS SO WE CAN ASSIGN NOZZLES ACROSS MULTIPLE BD PLACEMENTS
-    //Assign Nozzles to Master_Part list (cBoards)
+    //NOW ALL BOARD'S Parts have been added to master list and each assigned a feeder;
+    //need to sort all parts in master-list by nozzle size
+    all_boards_list.sort_parts_by_nozzle_size();
+    //assign feeders to master list of parts
 
 
 }

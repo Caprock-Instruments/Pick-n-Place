@@ -27,6 +27,7 @@
 #include "cgcode.h"
 #include "cflyingcamera.h"
 #include "cboard.h"
+#include "cboards.h"
 #include "cfeeder.h"
 
 #include "dialog_feedercalibrate.h"
@@ -302,6 +303,7 @@ private:
     int gcode_run_line_indx = -1;  //when running a pre-filled list of gcode lines; this holds our current index
     QStringList gcode_lines_to_run;
 
+    cBoards all_boards_list;
     vector<cBoard> board_list;
     vector<cFeeder> feeder_list;
     vector<cNozzles> nozzles_defs_list;
