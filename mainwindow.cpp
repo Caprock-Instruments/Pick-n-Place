@@ -2611,6 +2611,23 @@ bool MainWindow::pick_part(cPart part, cNozzles nozzle_list, int dwell_ms, float
 
 }
 
+bool MainWindow::place_part(int nozzle_id, float part_orientation, float location_orientation, Point3f place_location)
+{
+    cPick_n_Place cpnp;
+
+    int feeder_id = part.feeder_id;
+    cFeeder fdr = feeder_list[feeder_id];
+    Point3f feeder_location = fdr.feed_location;
+    int nozzle_Id = part.nozzle_id;
+    Point3f nozzle_offset = nozzle_list.nozzle_positions_list[nozzle_Id];
+
+    //gen gcode for this part-nozzle combo
+    QStringList pick_op_gcode_lines = cpnp.gen_gcode_place_operation(nozzle_offset, feeder_location, dwell_ms, lift_off_distance);
+
+    //fire off gcode-lines
+
+}
+//note: target_angle is in cnc coords; so to get must use combo of board rotation plus part destination rotation
 bool MainWindow::rotate_part(cPart part, float target_angle)
 {
     cPick_n_Place cpnp;
@@ -2631,10 +2648,7 @@ bool MainWindow::upVision_angle_correct()
 
 }
 
-bool MainWindow::place_part(int nozzle_id, float part_orientation, float location_orientation, Point3f place_location)
-{
 
-}
 
 void MainWindow::pnp_state_machine()
 {

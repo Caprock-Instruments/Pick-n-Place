@@ -5,6 +5,14 @@ cGCode::cGCode()
 
 }
 
+QString cGCode::gcode_turnOnOff_vacuum(bool on)
+{
+    QString sGcode_line;
+
+
+    return sGcode_line;
+}
+
 QString cGCode::gcode_moveX(float end_pt, bool fastMove)
 {
     QString sGcode_line;

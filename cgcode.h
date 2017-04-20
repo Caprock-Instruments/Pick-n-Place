@@ -26,6 +26,8 @@ public:
 
     QString gcode_dwell_ms(int ms);
 
+    QString gcode_turnOnOff_vacuum(bool on);
+
     QString gcode_moveX(float end_pt, bool fastMove);
     QString gcode_moveY(float end_pt, bool fastMove);
     QString gcode_moveZ(float end_pt, bool fastMove);

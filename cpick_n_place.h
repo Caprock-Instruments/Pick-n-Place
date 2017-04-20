@@ -40,6 +40,7 @@ public slots:
 public:
     QStringList gen_gcode_rotation_operation(int axis_to_use, float rotation_degrees);
     QStringList gen_gcode_pick_operation(Point3f nozzle_offset, Point3f feeder_location, int dwell_ms, float lift_off_distance);
+    QStringList gen_gcode_place_operation(Point3f nozzle_offset, Point3f feeder_location, int dwell_ms, float lift_off_distance);
 
 public:
     //note: if we add any static variables here to keep track of things; have to change mainwindow code to use

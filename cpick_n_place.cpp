@@ -36,6 +36,70 @@ QStringList cPick_n_Place::gen_gcode_rotation_operation(int axis_to_use, float r
     return gcode_lines;
 }
 
+
+QStringList cPick_n_Place::gen_gcode_place_operation(Point3f nozzle_offset, Point3f feeder_location, int dwell_ms, float lift_off_distance)
+{
+    QStringList gcode_lines;
+    cGCode cgc;
+
+    //compute where camera point over feeder should be so our nozzle is over feeder
+    Point3f point_over_feeder, point_above_feeder, point_on_feeder;
+
+    point_over_feeder.x = feeder_location.x - nozzle_offset.x;
+    point_over_feeder.y = feeder_location.y - nozzle_offset.y;
+    point_over_feeder.z = nozzle_offset.z;
+
+    point_above_feeder = point_over_feeder;
+    point_above_feeder.z = feeder_location.z + lift_off_distance;
+
+    point_on_feeder = point_over_feeder;
+    point_on_feeder.z = feeder_location.z;
+
+    //move XY so that nozzle is directly over feeder
+    //QString gcode_2d_line(Point3f end_pt, bool fastMove);
+    QString gcd_line = cgc.gcode_2d_line(point_over_feeder, true);
+
+    gcode_lines.append(gcd_line);
+
+    //move Z fast so nozzle is just above part
+    bool fast_move = true;
+    gcd_line = cgc.gcode_z_line(point_above_feeder, fast_move);
+
+    gcode_lines.append(gcd_line);
+
+
+    //move Z so nozzle is contacting part
+    fast_move = false;
+    gcd_line = cgc.gcode_z_line(point_on_feeder, fast_move);
+
+    gcode_lines.append(gcd_line);
+
+
+    //turn off vacuum;
+
+
+    //dwell
+    gcd_line = cgc.gcode_dwell_ms(dwell_ms);
+
+    gcode_lines.append(gcd_line);
+
+    //raise up slowly for part lift-off
+    //move Z slowly so nozzle is just above part
+    gcd_line = cgc.gcode_z_line(point_above_feeder, fast_move);
+
+    gcode_lines.append(gcd_line);
+
+    //raise to full height fast
+    fast_move = true;
+    gcd_line = cgc.gcode_z_line(point_above_feeder, fast_move);
+
+    gcode_lines.append(gcd_line);
+
+
+
+}
+
+
 QStringList cPick_n_Place::gen_gcode_pick_operation(Point3f nozzle_offset, Point3f feeder_location, int dwell_ms, float lift_off_distance)
 {
     QStringList gcode_lines;
@@ -62,14 +126,14 @@ QStringList cPick_n_Place::gen_gcode_pick_operation(Point3f nozzle_offset, Point
 
     //move Z fast so nozzle is just above part
     bool fast_move = true;
-    cgc.gcode_z_line(point_above_feeder, fast_move);
+    gcd_linecgc.gcode_z_line(point_above_feeder, fast_move);
 
     gcode_lines.append(gcd_line);
 
 
     //move Z so nozzle is contacting part
     fast_move = false;
-    cgc.gcode_z_line(point_on_feeder, fast_move);
+    gcd_line = cgc.gcode_z_line(point_on_feeder, fast_move);
 
     gcode_lines.append(gcd_line);
 
@@ -81,13 +145,13 @@ QStringList cPick_n_Place::gen_gcode_pick_operation(Point3f nozzle_offset, Point
 
     //raise up slowly for part lift-off
     //move Z slowly so nozzle is just above part
-    cgc.gcode_z_line(point_above_feeder, fast_move);
+    gcd_line = cgc.gcode_z_line(point_above_feeder, fast_move);
 
     gcode_lines.append(gcd_line);
 
     //raise to full height fast
     fast_move = true;
-    cgc.gcode_z_line(point_above_feeder, fast_move);
+    gcd_line = cgc.gcode_z_line(point_above_feeder, fast_move);
 
     gcode_lines.append(gcd_line);
 
