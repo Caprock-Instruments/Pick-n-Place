@@ -301,7 +301,7 @@ private:
     QStringList gcode_lines_to_run;
 
     cBoards all_boards_list;
-    vector<cBoard> board_list;
+//    vector<cBoard> board_list;
     vector<cFeeder> feeder_list;
     vector<cNozzles> nozzles_defs_list;
 

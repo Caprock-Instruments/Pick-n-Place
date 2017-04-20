@@ -1787,7 +1787,8 @@ void MainWindow::load_job(QString jobFileName)
 
 
                     //add it to list
-                    board_list.push_back(cbd);
+                    //board_list.push_back(cbd);
+                    all_boards_list.master_board_list.push_back(cbd);
 
 
                 }
@@ -2500,7 +2501,9 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
 
 void MainWindow::load_boards(QString boards_list_fileName)
 {
-    board_list.clear();  //clear out all boards,
+    //board_list.clear();  //clear out all boards,
+    all_boards_list.master_board_list.clear();
+
     cUtils cutils;
 
     //each QStringList line holds all info for a single board
@@ -2556,7 +2559,7 @@ void MainWindow::load_boards(QString boards_list_fileName)
             //extract info for each nozzle from each QStringList (each list has all info for 1 nozzle)
             load_board(sBoard_fileName, cboard);
 
-            board_list.push_back(cboard);
+            //board_list.push_back(cboard);
             all_boards_list.master_board_list.push_back(cboard);  //add board to master list
             all_boards_list.append_part_to_master_list(cboard);  //add board parts to master list
         }
@@ -2575,7 +2578,8 @@ void MainWindow::load_boards(QString boards_list_fileName)
     //NOW ALL BOARD'S Parts have been added to master list and each assigned a feeder;
     //need to sort all parts in master-list by nozzle size
     all_boards_list.sort_parts_by_nozzle_size();
-    //assign feeders to master list of parts
+    //assign feeders to master list of parts; so placing is done across all the boards
+    //note: during this op, parts have also been marked if they're at end of a fill so we'll know when to go place the parts (as nozzles are all full of what we can fill'em with)
     all_boards_list.assign_all_parts_to_nozzles(nozzles_defs_list, MAX_NUM_NOZZLES);
 
 }

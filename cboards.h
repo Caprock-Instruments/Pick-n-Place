@@ -39,8 +39,7 @@ public:
 public:
     vector<cPart> master_parts_list;   //need to group all the boards togeather so we can sort them correctly so we're not changing nozzles more than 1x ...
 
-    vector<cBoard> master_board_list;
-
+    vector<cBoard> master_board_list;  //replaces vector<cBoard> board_list; usage: all_boards_list.master_board_list; 1790, 2504, 2562
 private:
 
     void init_nozzle_fill_status(QStringList &nozzle_fill_status, const int MAX_NUM_NOZZLES);
