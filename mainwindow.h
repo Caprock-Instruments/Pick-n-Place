@@ -29,6 +29,7 @@
 #include "cboard.h"
 #include "cboards.h"
 #include "cfeeder.h"
+#include "cpick_n_place.h"
 
 #include "dialog_feedercalibrate.h"
 
@@ -51,8 +52,6 @@ public:
 
     enum GCODE_PROCESS_STATE
     {
-        LOAD_BOARDS,
-        FIND_FIDUCIALS,  //for a given board
         LOAD_NOZZLE_x,
         UPVISION_ANGLE_CORRECT_NOZZLE_x,
         PLACE_NOZZLE_x,
@@ -182,7 +181,7 @@ private:
     void load_feeders(QString feeder_definitions_fileName);
     bool load_feeder(QStringList feeder_info_list, cFeeder &feederDefs);
 
-
+    //DATA-BASE CREATION ROUTINES; NOT PART OF GCODE PROCESS
     void load_nozzles(QStringList nozzle_defs_fileNames_list);
     void load_nozzle(QStringList nozzle_info_list, cNozzle &nozzleDefs);
 
@@ -200,8 +199,10 @@ private:
 
     void find_fiducials();
     void find_fiducial(Point2f approx_location, Point2f &found_location);
-    bool pick_part(Point3f feeder_location);
-    bool rotate_part(float target_angle);
+
+    bool pick_part(cPart part, cNozzles nozzle_list, int dwell_ms, float lift_off_distance);
+
+    bool rotate_part(cPart part, float target_angle);
     bool upVision_angle_correct();
     bool place_part(int nozzle_id, float part_orientation, float location_orientation, Point3f place_location);
 
@@ -296,7 +297,7 @@ private:
     int gCode_move_timeOut_count_com3;
     int cur_move_com_id = 1;
 
-    GCODE_PROCESS_STATE gcode_process_state = GCODE_PROCESS_STATE::LOAD_BOARDS;
+    GCODE_PROCESS_STATE gcode_process_state = GCODE_PROCESS_STATE::LOAD_NOZZLE_x;
     int gcode_run_line_indx = -1;  //when running a pre-filled list of gcode lines; this holds our current index
     QStringList gcode_lines_to_run;
 
@@ -332,8 +333,9 @@ private:
     QStringList sFeederTypes_list;
     QStringList sNozzleTypes_list;
 
-
-
+    //keep the cnc head location here as we're in constant comm with the GRBL controllers
+    Point3f current_head_location; //keep track of where the camera is (with z-height of position of nozzles tracked in cNozzles)
+    cPick_n_Place pick_n_place;
 
 };
 

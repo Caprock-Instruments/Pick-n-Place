@@ -5,6 +5,15 @@ cUtils_Math::cUtils_Math()
 
 }
 
+//map degrees rotation to linear distance
+bool cUtils_Math::radial_distance(double radius, double degrees_rotation, double &radial_distance)
+{
+    radial_distance = 2.0* PI * radius * degrees_rotation/360.0;
+
+    return true;
+}
+
+
 bool cUtils_Math::distance_between_2_points(Point2f pt1, Point2f pt2, double &distance)
 {
     double dx = pt2.x - pt1.x;

@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     dialog_feedercalibrate.cpp \
     my_qlabel.cpp \
     cboards.cpp \
-    cutils_math.cpp
+    cutils_math.cpp \
+    cpick_n_place.cpp
 
 HEADERS  += mainwindow.h \
     cfeeders.h \
@@ -67,7 +68,8 @@ HEADERS  += mainwindow.h \
     dialog_feedercalibrate.h \
     my_qlabel.h \
     cboards.h \
-    cutils_math.h
+    cutils_math.h \
+    cpick_n_place.h
 
 FORMS    += mainwindow.ui \
     dialog_feedercalibrate.ui

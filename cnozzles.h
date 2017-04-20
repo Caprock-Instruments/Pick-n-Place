@@ -31,9 +31,13 @@ signals:
 public slots:
 
 public:
+    bool insert_nozzle_into_list(cNozzle nozzle);
+
+
     vector<cNozzle> nozzle_list;
 
-    bool insert_nozzle_into_list(cNozzle nozzle);
+    //position relative to camera (which is our cal-point), z-height is physical distance off base-height of starting point
+    vector<Point3f> nozzle_positions_list;
 
 
 private:

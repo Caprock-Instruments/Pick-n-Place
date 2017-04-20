@@ -5,6 +5,62 @@ cGCode::cGCode()
 
 }
 
+QString cGCode::gcode_moveX(float end_pt, bool fastMove)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+QString cGCode::gcode_moveY(float end_pt, bool fastMove)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+QString cGCode::gcode_moveZ(float end_pt, bool fastMove)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+QString cGCode::gcode_z_line(Point3f end_pt, bool fastMove)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+QString cGCode::gcode_z_line(Point3f start_pt, Point3f end_pt, float percent_fast_firstPart_move)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+
+QString cGCode::gcode_dwell_ms(int ms)
+{
+    QString sGcode_line;
+
+
+
+    return sGcode_line;
+}
+
+
 QString cGCode::gcode_arc(Point3f start_pt, Point3f end_pt, Point3f center_pt, bool bFull_circle)
 {
     QString sGcode_line;

@@ -24,7 +24,16 @@ class cGCode
 public:
     cGCode();
 
+    QString gcode_dwell_ms(int ms);
+
+    QString gcode_moveX(float end_pt, bool fastMove);
+    QString gcode_moveY(float end_pt, bool fastMove);
+    QString gcode_moveZ(float end_pt, bool fastMove);
+
     QString gcode_2d_line(Point3f end_pt, bool fastMove);
+    QString gcode_z_line(Point3f end_pt, bool fastMove);
+    QString gcode_z_line(Point3f start_pt, Point3f end_pt, float percent_fast_firstPart_move);
+
     QString gcode_line(Point3f next_pt, bool fastMove);
 
     QString gcode_relative_2d_line(Point3f end_pt, bool fastMove);

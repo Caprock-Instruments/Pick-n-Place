@@ -1786,8 +1786,7 @@ void MainWindow::load_job(QString jobFileName)
                     cbd.board_rotation = rot;
 
 
-                    //add it to list
-                    //board_list.push_back(cbd);
+                    //add board to the master board list
                     all_boards_list.master_board_list.push_back(cbd);
 
 
@@ -2501,7 +2500,7 @@ void MainWindow::load_board(QString board_fileName, cBoard &board)
 
 void MainWindow::load_boards(QString boards_list_fileName)
 {
-    //board_list.clear();  //clear out all boards,
+    //clear out all boards,
     all_boards_list.master_board_list.clear();
 
     cUtils cutils;
@@ -2559,7 +2558,6 @@ void MainWindow::load_boards(QString boards_list_fileName)
             //extract info for each nozzle from each QStringList (each list has all info for 1 nozzle)
             load_board(sBoard_fileName, cboard);
 
-            //board_list.push_back(cboard);
             all_boards_list.master_board_list.push_back(cboard);  //add board to master list
             all_boards_list.append_part_to_master_list(cboard);  //add board parts to master list
         }
@@ -2584,6 +2582,7 @@ void MainWindow::load_boards(QString boards_list_fileName)
 
 }
 
+
 void MainWindow::find_fiducials()
 {
 
@@ -2595,13 +2594,35 @@ void MainWindow::find_fiducial(Point2f approx_location, Point2f &found_location)
 }
 
 
-bool MainWindow::pick_part(Point3f feeder_location)
+bool MainWindow::pick_part(cPart part, cNozzles nozzle_list, int dwell_ms, float lift_off_distance)
 {
+    cPick_n_Place cpnp;
+
+    int feeder_id = part.feeder_id;
+    cFeeder fdr = feeder_list[feeder_id];
+    Point3f feeder_location = fdr.feed_location;
+    int nozzle_Id = part.nozzle_id;
+    Point3f nozzle_offset = nozzle_list.nozzle_positions_list[nozzle_Id];
+
+    //gen gcode for this part-nozzle combo
+    QStringList pick_op_gcode_lines = cpnp.gen_gcode_pick_operation(nozzle_offset, feeder_location, dwell_ms, lift_off_distance);
+
+    //fire off gcode-lines
 
 }
 
-bool MainWindow::rotate_part(float target_angle)
+bool MainWindow::rotate_part(cPart part, float target_angle)
 {
+    cPick_n_Place cpnp;
+    int nozzle_Id = part.nozzle_id;
+    int axis_to_use; //depends on nozzle (odd's use X, even's use Y)
+
+    axis_to_use = nozzle_Id % 2;  //modulo 2; so == 0 when even
+
+    QStringList rotation_op_gcode_lines = cpnp.gen_gcode_rotation_operation(axis_to_use, target_angle);
+
+    //fire off gcode-lines
+
 
 }
 
@@ -2617,9 +2638,8 @@ bool MainWindow::place_part(int nozzle_id, float part_orientation, float locatio
 
 void MainWindow::pnp_state_machine()
 {
+    static int current_nozzle;
 /* //GCODE_PROCESS_STATE::
-        LOAD_BOARDS,
-        FIND_FIDUCIALS,  //for a given board
         LOAD_NOZZLE_x,
         UPVISION_ANGLE_CORRECT_NOZZLE_x,
         PLACE_NOZZLE_x,
@@ -2627,33 +2647,13 @@ void MainWindow::pnp_state_machine()
         ALL_DONE
  */
 
-    if(gcode_process_state==GCODE_PROCESS_STATE::LOAD_BOARDS)
+    if(gcode_process_state==GCODE_PROCESS_STATE::LOAD_NOZZLE_x)
     {
-        //for now skip all this so we can create basic interfacing code
+        //run load_nozzle_x(int &current_nozzle);
 
-        //load some lines
-        gcode_lines_to_run = get_gcode_lines_next_operation();
+        //if(current_nozzle == MAX_NUM_NOZZLES)
+            //DONE: INDEX TO NEXT GCODE_PROCESS_STATE
 
-        GCODE_PROCESS_STATE process_state = static_cast<GCODE_PROCESS_STATE>(static_cast<int>(gcode_process_state)+1);
-        gcode_process_state = process_state;
-        return;
-    }
-    else if(gcode_process_state==GCODE_PROCESS_STATE::FIND_FIDUCIALS)
-    {
-        GCODE_PROCESS_STATE process_state = static_cast<GCODE_PROCESS_STATE>(static_cast<int>(gcode_process_state)+1);
-        gcode_process_state = process_state;
-        return;
-
-        //do we have another Fiducial to find? if yes; get it
-
-        //move to fiducial neighborhood
-        //get image; find fiducial in pixels
-        //move to center of fiducial
-        //chk if we're good; if so, update location of fiducial
-
-    }
-    else if(gcode_process_state==GCODE_PROCESS_STATE::LOAD_NOZZLE_x)
-    {
         GCODE_PROCESS_STATE process_state = static_cast<GCODE_PROCESS_STATE>(static_cast<int>(gcode_process_state)+1);
         gcode_process_state = process_state;
         return;

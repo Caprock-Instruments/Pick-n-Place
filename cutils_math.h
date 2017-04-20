@@ -28,6 +28,8 @@ public:
 
     const double eps = 0.0001;
 
+    //map degrees rotation to linear distance
+    bool radial_distance(double radius, double degrees_rotation, double &radial_distance);
 
     bool angle_between_2_points(Point2f pt1, Point2f pt2, double &angle_degrees);
     bool distance_between_2_points(Point2f pt1, Point2f pt2, double &distance);
